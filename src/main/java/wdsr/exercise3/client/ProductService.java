@@ -1,6 +1,5 @@
 package wdsr.exercise3.client;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +12,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+
+import org.jboss.logging.Logger;
 
 import wdsr.exercise3.model.Product;
 import wdsr.exercise3.model.ProductType;
@@ -23,6 +23,8 @@ public class ProductService extends RestClientBase {
 		super(serverHost, serverPort, client);
 	}
 	
+	Logger logger = Logger.getLogger(ProductService.class);
+	
 	/**
 	 * Looks up all products of given types known to the server.
 	 * @param types Set of types to be looked up
@@ -30,30 +32,10 @@ public class ProductService extends RestClientBase {
 	 */
 	public List<Product> retrieveProducts(Set<ProductType> types) {
 		Invocation.Builder request = baseTarget.path("products")
-				.queryParam("type", types)
+				.queryParam("type", types.toArray())
 				.request(MediaType.APPLICATION_JSON);
-		Response response = request.get();
-				
-		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-			return request.get(new GenericType<List<Product>>() {});
-		} 
-		return new ArrayList<Product>();
-		/*
-		WebTarget target = baseTarget.path("products");
-		for (ProductType type : types) {
-			target = target.queryParam("type", type);
-		}
-		Response response = target.request().get();
 		
-		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-			return target.request().get(new GenericType<List<Product>>() {});
-		}
-		
-		if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
-			return new ArrayList<Product>();
-		}
-		
-		return new ArrayList<Product>(); */
+		return request.get(new GenericType<List<Product>>() {});
 	} 
 	
 	/**
@@ -93,15 +75,17 @@ public class ProductService extends RestClientBase {
 	 * @throws WebApplicationException if request to the server failed
 	 */
 	public int storeNewProduct(Product product) {
-		Response response = baseTarget.path("products")
-				.request(MediaType.APPLICATION_JSON)
-				.post(Entity.entity(product, MediaType.APPLICATION_JSON),Response.class);
 		
-		if (response.getStatus() == Status.CREATED.getStatusCode()) {
-			return response.readEntity(Product.class).getId();
-		} 
+		WebTarget target = baseTarget.path("products");
+		Invocation.Builder request = target.request();
 		
-		throw new WebApplicationException();
+		Response response = request.post(Entity.entity(product, MediaType.APPLICATION_JSON),Response.class);
+		
+		if (response.getStatus() == Response.Status.BAD_REQUEST.getStatusCode()){
+			throw new WebApplicationException();
+		}
+		
+		return response.readEntity(Product.class).getId();
 	}
 	
 	/**
