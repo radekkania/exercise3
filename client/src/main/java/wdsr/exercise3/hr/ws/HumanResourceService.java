@@ -1,4 +1,4 @@
-package wdsr.exercise.hr.ws;
+package wdsr.exercise3.hr.ws;
 
 import java.net.MalformedURLException;
 import java.net.URL;

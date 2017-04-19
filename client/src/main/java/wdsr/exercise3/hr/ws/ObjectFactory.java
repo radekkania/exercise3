@@ -1,5 +1,5 @@
 
-package wdsr.exercise.hr.ws;
+package wdsr.exercise3.hr.ws;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

@@ -1,5 +1,5 @@
 
-package wdsr.exercise.hr.ws;
+package wdsr.exercise3.hr.ws;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -42,6 +42,16 @@ public class EmployeeType {
     protected String firstName;
     @XmlElement(name = "LastName", required = true)
     protected String lastName;
+    
+    /*
+    public EmployeeType(int number, String firstName, String lastName) {
+    	this.number = number;
+    	this.firstName = firstName;
+    	this.lastName = lastName;
+    }
+    
+    public EmployeeType() {}
+    */
 
     /**
      * Gets the value of the number property.

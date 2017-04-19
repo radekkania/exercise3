@@ -2,4 +2,6 @@ dependencies {
 	compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version: '3.1.6'
 	compile group: 'org.apache.cxf', name: 'cxf-rt-transports-http', version: '3.1.6'
 	compile group: 'org.apache.cxf.xjc-utils', name: 'cxf-xjc-runtime', version: '3.0.5'
+	// https://mvnrepository.com/artifact/log4j/log4j
+	compile group: 'log4j', name: 'log4j', version: '1.2.16'
 }

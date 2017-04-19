@@ -1,5 +1,5 @@
 
-package wdsr.exercise.hr.ws;
+package wdsr.exercise3.hr.ws;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -39,6 +39,15 @@ public class HolidayRequest {
     protected HolidayType holiday;
     @XmlElement(name = "Employee", required = true)
     protected EmployeeType employee;
+    
+    /*
+    public HolidayRequest(EmployeeType employee, HolidayType holiday) {
+    	this.employee = employee;
+    	this.holiday = holiday;
+    }
+    
+    public HolidayRequest() {}
+    */
 
     /**
      * Gets the value of the holiday property.
